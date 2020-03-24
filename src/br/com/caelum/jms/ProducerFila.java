@@ -13,7 +13,7 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
-public class Producer {
+public class ProducerFila {
 
 	public static void main(String[] args) throws Exception{
 
