@@ -1,14 +1,19 @@
-package br.com.caelum.jms;
+package br.com.caelum.jms.producer;
+
+import java.util.Scanner;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
-public class ProducerTopico {
+public class ProducerFila {
 
 	public static void main(String[] args) throws Exception{
 
@@ -17,18 +22,27 @@ public class ProducerTopico {
 		
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory"); 
 		Connection connection = factory.createConnection();  
-		
 		connection.start();
 		
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE); 
 		
-		Destination topico = (Destination) context.lookup("loja");
+		Destination fila = (Destination) context.lookup("financeiro");
 		
-		MessageProducer producer =  session.createProducer(topico);
+		MessageProducer producer =  session.createProducer(fila);
 		
 		
-		Message message = session.createTextMessage("<pedidos><id>333</id></pedidos>");
-		producer.send(message);
+		for (int i = 0; i < 1000; i++) {
+			
+			Message message = session.createTextMessage("<pedidos><id>" + i + "</id></pedidos>");
+			producer.send(message);
+		}
+		
+		
+		
+	
+		
+		
+		new Scanner(System.in).nextLine();
 		
 		session.close();
 		connection.close();

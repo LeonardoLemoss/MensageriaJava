@@ -1,4 +1,4 @@
-package br.com.caelum.jms;
+package br.com.caelum.jms.consumer;
 
 import java.util.Scanner;
 
